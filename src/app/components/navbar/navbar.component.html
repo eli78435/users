@@ -11,6 +11,6 @@
     <button mat-menu-item [routerLink]="['/orders']" routerLinkActive="router-link-active">Orders</button>
     <button mat-menu-item [routerLink]="['/manage-orders']" routerLinkActive="router-link-active">Manage Orders</button>
     <button mat-menu-item [routerLink]="['/manage-products']" routerLinkActive="router-link-active">Manage Products</button>
-    <button mat-menu-item>Logout</button>
+    <button mat-menu-item (click)="logOut()">Logout</button>
   </mat-menu>
 </mat-toolbar>
