@@ -1,15 +1,16 @@
 <mat-toolbar color="primary">
   <mat-icon>eco</mat-icon>
-  <a style="color: white">e-Commerce Shop</a>
+  <a style="color: white" [routerLink]="['/']" routerLinkActive="router-link-active">e-Commerce Shop</a>
   <span class="spacer"></span>
   <div>
-    <a mat-button href="">Shopping Cart</a>
+    <a mat-button [routerLink]="['/shopping-card']" routerLinkActive="router-link-active">Shopping Cart</a>
   </div>
-  <button [matMenuTriggerFor]="appMenue" mat-raised-button color="accent">Loggin</button>
+  <button [matMenuTriggerFor]="appMenue" mat-raised-button color="accent"
+    [routerLink]="['/login']" routerLinkActive="router-link-active">Loggin</button>
   <mat-menu #appMenue>
-    <button mat-menu-item>Orders</button>
-    <button mat-menu-item>Manage Orders</button>
-    <button mat-menu-item>Manage Products</button>
+    <button mat-menu-item [routerLink]="['/orders']" routerLinkActive="router-link-active">Orders</button>
+    <button mat-menu-item [routerLink]="['/manage-orders']" routerLinkActive="router-link-active">Manage Orders</button>
+    <button mat-menu-item [routerLink]="['/manage-products']" routerLinkActive="router-link-active">Manage Products</button>
     <button mat-menu-item>Logout</button>
   </mat-menu>
 </mat-toolbar>
