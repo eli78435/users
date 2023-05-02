@@ -6,31 +6,49 @@ import {
   EmailAuthProvider, 
   signInWithPopup,
   signInAnonymously,
-  signOut
+  signOut,
+  AuthProvider
 } from '@angular/fire/auth';
+import { UserDetails } from '../models/user-details.model';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private auth: Auth) { }
+  constructor(private auth: Auth, private userService: UserService) { }
 
   async loginWithGoogle(): Promise<void> {
     const provider = new GoogleAuthProvider();
-    const userCredentials = await signInWithPopup(this.auth, provider);
-    console.log(userCredentials);
+    return this.login(provider);
   }
 
   async loginWithFacebook(): Promise<void> {
     const provider = new FacebookAuthProvider();
-    const userCredentials = await signInWithPopup(this.auth, provider);
-    console.log(userCredentials);
+    return this.login(provider);
   }
 
   async loginWithEmail(): Promise<void> {
     const provider = new EmailAuthProvider();
-    const userCredentials = await signInWithPopup(this.auth, provider);
+    return this.login(provider);
+  }
+
+  private async login(provider: AuthProvider): Promise<void> {
+    const userCredentials = await signInWithPopup(this.auth, provider)
+      .then(async credential => {
+        if(credential) {
+          const userDetails: UserDetails = {
+            uid: credential.user?.uid ?? '',
+            name: credential.user?.displayName ?? '',
+            email: credential.user?.email ?? '',
+            isAdmin: false,
+            photoURL: credential.user?.photoURL ?? ''
+          };
+          await this.userService.addUser(userDetails);
+        }
+      });
+
     console.log(userCredentials);
   }
 

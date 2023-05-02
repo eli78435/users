@@ -6,6 +6,7 @@ export const environment = {
     apiKey: 'AIzaSyCQj6n-WsD-J4vU0fpsrNmb2pkDmv0cy1Q',
     authDomain: 'userseli-b12c2.firebaseapp.com',
     messagingSenderId: '1004394553119',
+    databaseURL: 'https://userseli-default-rtdb.europe-west1.firebasedatabase.app',
   },
     production: true
 };
