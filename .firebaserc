@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "userseli": {
+      "hosting": {
+        "users": [
+          "usesreli1"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "userseli"
+  }
+}
