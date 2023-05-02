@@ -5,8 +5,18 @@
   <div>
     <a mat-button [routerLink]="['/shopping-card']" routerLinkActive="router-link-active">Shopping Cart</a>
   </div>
-  <button [matMenuTriggerFor]="appMenue" mat-raised-button color="accent"
-    [routerLink]="['/login']" routerLinkActive="router-link-active">Loggin</button>
+  <button *ngIf="displayName$ | async as displayName else login" 
+    [matMenuTriggerFor]="appMenue" 
+    mat-raised-button color="accent"
+    >{{displayName}}
+  </button>
+  <ng-template #login>
+    <button [matMenuTriggerFor]="appMenue" 
+      mat-button
+      [routerLink]="['/login']" 
+      routerLinkActive="router-link-active">Loggin
+    </button>
+  </ng-template>
   <mat-menu #appMenue>
     <button mat-menu-item [routerLink]="['/orders']" routerLinkActive="router-link-active">Orders</button>
     <button mat-menu-item [routerLink]="['/manage-orders']" routerLinkActive="router-link-active">Manage Orders</button>
