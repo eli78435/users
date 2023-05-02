@@ -10,7 +10,7 @@ import { NavbarComponent } from '../components/navbar/navbar.component';
 import { NoAccessComponent } from '../components/no-access/no-access.component';
 import { NotFoundComponent } from '../components/not-found/not-found.component';
 import { OrdersComponent } from '../components/orders/orders.component';
-import { ShoppingCardComponent } from '../components/shopping-card/shopping-card.component';
+import { ShoppingCartComponent } from '../components/shopping-cart/shopping-cart.component';
 import { ManageOrdersComponent } from '../components/admin/manage-orders/manage-orders.component';
 import { ManageProductsComponent } from '../components/admin/manage-products/manage-products.component';
 
@@ -22,7 +22,7 @@ const components = [
   NoAccessComponent,
   NotFoundComponent,
   OrdersComponent,
-  ShoppingCardComponent,
+  ShoppingCartComponent,
   ManageOrdersComponent,
   ManageProductsComponent,
 ];

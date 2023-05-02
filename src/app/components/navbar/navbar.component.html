@@ -1,1 +1,15 @@
-<p>navbar works!</p>
+<mat-toolbar color="primary">
+  <mat-icon>eco</mat-icon>
+  <a style="color: white">e-Commerce Shop</a>
+  <span class="spacer"></span>
+  <div>
+    <a mat-button href="">Shopping Cart</a>
+  </div>
+  <button [matMenuTriggerFor]="appMenue" mat-raised-button color="accent">Loggin</button>
+  <mat-menu #appMenue>
+    <button mat-menu-item>Orders</button>
+    <button mat-menu-item>Manage Orders</button>
+    <button mat-menu-item>Manage Products</button>
+    <button mat-menu-item>Logout</button>
+  </mat-menu>
+</mat-toolbar>
