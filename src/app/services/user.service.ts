@@ -53,10 +53,20 @@ export class UserService {
   }
 
   addUser(user: UserDetails): Promise<void> {
+    const notAdminUser: UserDetails = {
+      ...user,
+      isAdmin: false
+    };
     return set(ref(this.db, '/users/' + user?.uid), user);
   }
 
   updateUser(user: UserDetails): Promise<void> {
-    return update(ref(this.db, '/users/' + user?.uid), user);
+    const userToUpdate = {
+      uid: user?.uid,
+      name: user?.name,
+      email: user?.email,
+      photoURL: user?.photoURL,
+    };
+    return update(ref(this.db, '/users/' + user?.uid), userToUpdate);
   }
 }

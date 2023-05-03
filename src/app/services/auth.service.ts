@@ -11,13 +11,14 @@ import {
 } from '@angular/fire/auth';
 import { UserDetails } from '../models/user-details.model';
 import { UserService } from './user.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private auth: Auth, private userService: UserService) { }
+  constructor(private auth: Auth, private userService: UserService, private router: Router) { }
 
   async loginWithGoogle(): Promise<void> {
     const provider = new GoogleAuthProvider();
@@ -45,7 +46,10 @@ export class AuthService {
             isAdmin: false,
             photoURL: credential.user?.photoURL ?? ''
           };
-          await this.userService.addUser(userDetails);
+          await this.userService.updateUser(userDetails);
+
+          const returnUrl = localStorage.getItem('returnUrl');
+          this.router.navigateByUrl(returnUrl ?? '/');
         }
       });
 
