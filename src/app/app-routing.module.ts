@@ -9,15 +9,16 @@ import { ManageProductsComponent } from './components/admin/manage-products/mana
 import { NoAccessComponent } from './components/no-access/no-access.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'shopping-card', component: ShoppingCartComponent, canActivate: [AuthGuard] },
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
-  { path: 'manage-orders', component: ManageOrdersComponent, canActivate: [AuthGuard] },
-  { path: 'manage-products', component: ManageProductsComponent, canActivate: [AuthGuard] },
-  { path: 'no-access', component: NoAccessComponent },
+  { path: 'manage-orders', component: ManageOrdersComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'manage-products', component: ManageProductsComponent, canActivate: [AuthGuard, AdminGuard] },
+  { path: 'no-access', component: NoAccessComponent, canActivate: [AuthGuard] },
   { path: '*', component: NotFoundComponent }
 ];
 

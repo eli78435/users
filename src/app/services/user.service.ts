@@ -2,8 +2,8 @@ import { Injectable, Query } from '@angular/core';
 import { Auth, authState, User } from '@angular/fire/auth';
 import { child } from '@angular/fire/database';
 import { Database, getDatabase, ref, set, get, update } from "firebase/database";
-import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject, from, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { UserDetails } from '../models/user-details.model';
 
 @Injectable({
@@ -24,6 +24,21 @@ export class UserService {
     );
   }
 
+  get isAdmin(): Observable<boolean> {
+    return authState(this.auth).pipe(
+      switchMap((user, i) => {
+        if(user) {
+          return from(
+            this.getUser(user.uid)
+              .then((userDetails) => userDetails?.isAdmin ?? false)
+          )
+        } else {
+          return of(false);
+        }
+      })
+    )
+  }
+
   constructor(private auth: Auth) {}
 
   getUser(userId: string): Promise<UserDetails | null> {
@@ -32,7 +47,6 @@ export class UserService {
         if (snapshot.exists()) {
           return snapshot.val();
         } else {
-          console.log("No data available");
           return null;
         }
       });

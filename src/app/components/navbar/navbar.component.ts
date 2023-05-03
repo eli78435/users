@@ -11,12 +11,14 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class NavbarComponent implements OnInit {
 
+  isAdmin$: Observable<boolean>;
   displayName$: Observable<string | null>;
 
   constructor(private authService: AuthService, 
     private userService: UserService,
     private router: Router) {
     this.displayName$ = this.userService.displayName;
+    this.isAdmin$ = this.userService.isAdmin;
   }
 
   ngOnInit(): void {

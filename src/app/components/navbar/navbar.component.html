@@ -19,8 +19,10 @@
   </ng-template>
   <mat-menu #appMenue>
     <button mat-menu-item [routerLink]="['/orders']" routerLinkActive="router-link-active">Orders</button>
-    <button mat-menu-item [routerLink]="['/manage-orders']" routerLinkActive="router-link-active">Manage Orders</button>
-    <button mat-menu-item [routerLink]="['/manage-products']" routerLinkActive="router-link-active">Manage Products</button>
+    <ng-container *ngIf="isAdmin$ | async">
+      <button mat-menu-item [routerLink]="['/manage-orders']" routerLinkActive="router-link-active">Manage Orders</button>
+      <button mat-menu-item [routerLink]="['/manage-products']" routerLinkActive="router-link-active">Manage Products</button>
+    </ng-container>
     <button mat-menu-item (click)="logOut()">Logout</button>
   </mat-menu>
 </mat-toolbar>
