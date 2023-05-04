@@ -24,6 +24,12 @@ export class UserService {
     );
   }
 
+  get userImageUrl(): Observable<string | null> {
+    return authState(this.auth).pipe(
+      map(user => user?.photoURL ?? null)
+    );
+  }
+
   get isAdmin(): Observable<boolean> {
     return authState(this.auth).pipe(
       switchMap((user, i) => {
