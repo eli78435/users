@@ -36,10 +36,10 @@ export class AuthService {
         if(credential) {
           const userDetails: UserDetails = {
             uid: credential.user?.uid ?? '',
-            name: credential.user?.displayName ?? '',
+            name: credential.user?.displayName ?? credential.user?.email?.split('@')?.[0] ?? '',
             email: credential.user?.email ?? '',
             isAdmin: false,
-            photoURL: credential.user?.photoURL ?? ''
+            photoURL: ''
           };
           await this.userService.updateUser(userDetails);
 

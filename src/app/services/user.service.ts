@@ -12,40 +12,47 @@ import { UserDetails } from '../models/user-details.model';
 export class UserService {
 
   private db: Database = getDatabase();
-  private _currentUser: Subject<User | null> = new Subject<User | null>();
+  private _authUserDetails$: Observable<UserDetails | null>;
 
   get currentUser(): Observable<User | null> {
     return authState(this.auth);
   }
 
+  get currentUserDetails(): Observable<UserDetails | null> {
+    return this._authUserDetails$;
+  }
+
   get displayName(): Observable<string | null> {
-    return authState(this.auth).pipe(
-      map(user => user?.displayName ?? null)
+    return this._authUserDetails$.pipe(
+      map(userDetails => userDetails?.name ?? null)
     );
   }
 
   get userImageUrl(): Observable<string | null> {
-    return authState(this.auth).pipe(
-      map(user => user?.photoURL ?? null)
+    return this._authUserDetails$.pipe(
+      map(userDetails => userDetails?.photoURL ?? null)
     );
   }
 
   get isAdmin(): Observable<boolean> {
-    return authState(this.auth).pipe(
+    return this._authUserDetails$.pipe(
+      map(userDetails => userDetails?.isAdmin ?? false)
+    );
+  }
+
+  constructor(private auth: Auth) {
+    this._authUserDetails$ = authState(this.auth).pipe(
       switchMap((user, i) => {
         if(user) {
           return from(
             this.getUser(user.uid)
-              .then((userDetails) => userDetails?.isAdmin ?? false)
           )
         } else {
-          return of(false);
+          return of(null);
         }
       })
     )
   }
-
-  constructor(private auth: Auth) {}
 
   getUser(userId: string): Promise<UserDetails | null> {
     return get(ref(this.db, '/users/' + userId))
