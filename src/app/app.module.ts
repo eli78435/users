@@ -8,12 +8,13 @@ import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { DatabaseModule } from '@angular/fire/database';
+import { getPerformance, providePerformance } from '@angular/fire/performance';
 import { RouterModule, Routes } from '@angular/router';
 import { ComponentModule } from './added-modules/component.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -22,6 +23,7 @@ import { ComponentModule } from './added-modules/component.module';
     ComponentModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
+    providePerformance(() => getPerformance()),
     DatabaseModule,
     provideFirestore(() => getFirestore())
   ],
