@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     this.authService.loginWithFacebook();
   }
 
-  loginEmail() {
-    this.authService.loginWithEmail();
+  loginEmail(event: { email: string; password: string; }) {
+    this.authService.loginWithEmail(event.email, event.password);
   }
 }

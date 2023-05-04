@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from '../app-routing.module';
 import { CheckoutComponent } from '../components/checkout/checkout.component';
+import { LoginFormComponent } from '../components/login/login-form/login-form.component';
 import { LoginComponent } from '../components/login/login.component';
 import { HomeComponent } from '../components/home/home.component';
 import { NavbarComponent } from '../components/navbar/navbar.component';
@@ -16,6 +18,7 @@ import { ManageProductsComponent } from '../components/admin/manage-products/man
 
 const components = [
   CheckoutComponent,
+  LoginFormComponent,
   LoginComponent,
   HomeComponent,
   NavbarComponent,
@@ -31,6 +34,8 @@ const components = [
   declarations: [components],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule

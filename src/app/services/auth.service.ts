@@ -5,7 +5,7 @@ import {
   FacebookAuthProvider,
   EmailAuthProvider, 
   signInWithPopup,
-  signInAnonymously,
+  signInWithEmailAndPassword,
   signOut,
   AuthProvider
 } from '@angular/fire/auth';
@@ -30,13 +30,8 @@ export class AuthService {
     return this.login(provider);
   }
 
-  async loginWithEmail(): Promise<void> {
-    const provider = new EmailAuthProvider();
-    return this.login(provider);
-  }
-
-  private async login(provider: AuthProvider): Promise<void> {
-    const userCredentials = await signInWithPopup(this.auth, provider)
+  async loginWithEmail(email: string, password: string): Promise<void> {
+    await signInWithEmailAndPassword(this.auth, email, password)
       .then(async credential => {
         if(credential) {
           const userDetails: UserDetails = {
@@ -50,15 +45,42 @@ export class AuthService {
 
           const returnUrl = localStorage.getItem('returnUrl');
           this.router.navigateByUrl(returnUrl ?? '/');
+        } else {
+          console.log(`credential is null`);
+          this.router.navigateByUrl('/login');
+        }}, error => {
+          console.log(error);
+          this.router.navigateByUrl('/login');
         }
-      });
+      );
+  }
 
-    console.log(userCredentials);
+  private async login(provider: AuthProvider): Promise<void> {
+    await signInWithPopup(this.auth, provider)
+      .then(async credential => {
+        if(credential) {
+          const userDetails: UserDetails = {
+            uid: credential.user?.uid ?? '',
+            name: credential.user?.displayName ?? '',
+            email: credential.user?.email ?? '',
+            isAdmin: false,
+            photoURL: credential.user?.photoURL ?? ''
+          };
+          await this.userService.updateUser(userDetails);
+
+          const returnUrl = localStorage.getItem('returnUrl');
+          this.router.navigateByUrl(returnUrl ?? '/');
+        } else {
+          console.log(`credential is null`);
+          this.router.navigateByUrl('/login');
+        }
+      }, error => {
+        console.log(error);
+        this.router.navigateByUrl('/login');
+      });
   }
 
   async logOut() {
     await signOut(this.auth);
   }
-
-
 }

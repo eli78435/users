@@ -1,3 +1,11 @@
-<button mat-button color="primary" (click)="loginGoogle()">Login with Google</button>
-<button mat-button color="primary" (click)="loginFacebook()">Login with Facebook</button>
-<button mat-button color="primary" (click)="loginEmail()">Login with Email</button>
+<button mat-button color="primary" (click)="loginGoogle()">
+  Login with Google
+</button>
+<button mat-button color="primary" (click)="loginFacebook()">
+  Login with Facebook
+</button>
+<!-- <button mat-button color="primary" (click)="loginEmail(event$)">
+  Login with Email
+</button> -->
+
+<app-login-form (onLogin)="loginEmail($event)"></app-login-form>
